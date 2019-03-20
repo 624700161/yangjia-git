@@ -1,0 +1,81 @@
+// 头部
+.header {
+    padding: 10px;
+    .logo {
+        width: 88px;
+        height: 24px;
+    }
+    .login-icon {
+        width: 14px;
+        height: 16px;
+        position: relative;
+        top: 2px;
+    }
+}
+
+//slogan
+.slogan-area {
+    margin-top: 142px;
+    margin-bottom: 100px;
+    .slogan-title {
+        letter-spacing: 6px;
+        margin-bottom: 11px;
+    }
+    .slogan-line {
+        display: inline-block;
+        width: 100px;
+        height: 2px;
+        margin-bottom: 14px;
+    }
+    .slogan-subtitle {
+        letter-spacing: 1px;
+    }
+}
+
+//jump
+.jump-btn {
+    display: inline-block;
+    width: 301px;
+    height: 40px;
+    line-height: 40px;
+    letter-spacing: 1px;
+}
+
+//最外层背景图
+.bg-box {
+    width: 100%;
+    background: url(/static/index/bg-mobile.png) no-repeat top center;
+    background-size: cover;
+    position: relative;
+}
+
+//下拉框
+.drop-down {
+    position: absolute;
+    width: 96px;
+    height: 80px;
+    top: 40px;
+    right: 70px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    &::before {
+        position: absolute;
+        top: -10px;
+        left: 30px;
+        content: '';
+        display: inline-block;
+        width: 0;
+        height: 0;
+        border-left: 14px solid transparent;
+        border-right: 14px solid transparent;
+        border-bottom: 20px solid #fff;
+    }
+    .down-item {
+        height: 50%;
+        line-height: 40px;
+        border-bottom: 1px solid #ddd;
+        &:last-child{
+            border-bottom:0;
+        }
+    }
+}

@@ -1,0 +1,21 @@
+.tab-item{
+    position: relative;
+    background-color:#F6F6F6;
+    height: 38px;
+    width: 100%;
+    line-height: 38px;
+    .step-arrow{
+        position: absolute;
+        right: -10px;
+        top: 0;
+        width: 11px;
+        height: 38px;
+        z-index: 1
+    }
+    &.active{
+        background-color:#F08701;
+    }
+    .tabs-item-text.active{
+        color:#fff;
+    }
+}

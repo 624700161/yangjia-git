@@ -1,0 +1,89 @@
+.userindex{
+    position: relative;
+    background-color: #fff;
+    .item{
+        position: fixed;
+        right: 0.21rem;
+        top: 0.21rem;
+        z-index: 1001;
+        width: 0.85rem;
+        height: 0.65rem;
+        img{
+            width: 0.61rem;
+            height:0.41rem;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+        }
+    }
+    .bgimg{
+        width: 10.8rem;
+        height: auto;
+        vertical-align:middle;
+    }
+    .tx{
+        background-color: #fff;
+        border:0.01rem solid #f2f2f2;
+        border-radius: 100%;
+        width: 4.3rem;
+        height: 4.3rem;
+        overflow: hidden;
+        text-align: center;
+        padding: 0.2rem;
+        position: absolute;
+        left: 50%;
+        top: 4.3rem;
+        transform:translateX(-50%);
+        img{
+            width: 100%;
+            height: 100%;
+        }
+    }
+    .username{
+        text-align: center;
+        margin-top: 3rem;
+        font-size: 0.5rem;
+        color:#8c8c8c;
+    }
+    .username.isVip::after{
+        content: " ";
+        display: inline-block;
+        margin-left: 0.15rem;
+        margin-top:-0.1rem;
+        width: 0.51rem;
+        height: 0.52rem;
+        background: url(../../images/user/icon_v.png) no-repeat;
+        background-size: 100%;
+        vertical-align: middle;
+    }
+    .links{
+        width: 100%;
+        padding: 0 0.24rem;
+        margin-top: 1.24rem;
+    }
+    .loginoutbtn{
+        width: 7.3rem;
+        height: 1.2rem;
+        margin: 2.1rem auto 1.6rem auto;
+        border-radius: 0;
+        font-size: 0.5rem;
+    }
+}
+
+
+.userindex /deep/ .el-badge{
+    sup{
+        border: none;
+        transform: translateY(0%) translateX(50%);
+    }
+}
+.links /deep/ .mint-cell{
+    border: 0.01rem solid #f2f2f2;
+    margin-top: 0.25rem;
+    .mint-cell-wrapper{
+        background-image: none;
+    }
+}
+.links /deep/ .mint-cell:first-child{
+    margin-top: 0;
+}

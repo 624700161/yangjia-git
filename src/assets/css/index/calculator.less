@@ -1,0 +1,78 @@
+
+.calculator{
+    position: relative;
+    .mask{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color:rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+    }
+    .c_from{
+        position: fixed;
+        padding: 1.2rem 0.5rem;
+        background-color: #fff;
+        top: 100%;
+        width: 100%;
+        left: 0;
+        z-index: 1001;
+    }
+    .popup{
+        width: 100%;
+    }
+}
+.c_from /deep/ .mint-button{
+    width: 7.3rem;
+    height: 1.3rem;border-radius: 0;
+    margin: 0.9rem auto 0.5rem auto;
+    display: block;
+}
+.c_from /deep/ .el-form-item{
+    margin-bottom: 0.06rem;
+    background-color: #f5f5f4;
+    .el-form-item__label{
+        width: 3.7rem !important;
+        padding: 0 0.1rem 0 0.65rem;
+        font-size: 0.3rem;
+        color: black;
+    }
+    .el-input{
+        font-size: 0.3rem;
+        .el-input__inner{
+            background-color: #f5f5f4;
+            border: none;
+        }
+        .el-input__suffix{
+            right: 0.2rem;
+            .el-input__icon{
+                width: fit-content;
+            }
+        }
+    }
+    .el-form-item__content{
+        margin-left: 3.7rem !important;
+        .el-radio-group{
+            padding: 0.2rem 0;
+            .el-radio{
+                padding: 0.15rem 0;
+            }
+        }
+    }
+}
+.c_from /deep/ .el-form-item.ismust{
+    .el-form-item__label:before{
+        content: "*";
+        font-size: 0.74rem;
+        vertical-align: middle;
+        color: #e03031;
+        position: relative;
+        top: 0.1rem;
+        width: 0.5rem;
+        right: 0.1rem
+    }
+    .el-form-item__label{
+        padding-left:0.31rem;
+    }
+}

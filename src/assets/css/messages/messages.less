@@ -1,0 +1,35 @@
+.messages{
+    .messagesList{
+        padding: 0.5rem;
+    } 
+}
+.messages /deep/ .mint-cell{
+    border-bottom: 0.01rem solid #ccc;
+    .mint-cell-wrapper{
+        background-image: none;
+        .mint-cell-title{
+            .mint-cell-text{
+                width: 5rem;
+                white-space:nowrap;
+                overflow:hidden; 
+                text-overflow:ellipsis;
+                display: inline-block;
+                -webkit-box-orient:vertical;
+                font-size: 0.3rem;
+            }
+            .mint-cell-label{
+                font-size: 0.3rem;
+                color: #b8b8b8;
+                display: inline-block;
+            }
+            img{
+                width: 0.22rem;
+                height: 0.22rem;
+            }
+        }
+    }
+    
+}
+.messages /deep/ .mint-cell:first-child{
+    border-top: 0.01rem solid #ccc;
+}

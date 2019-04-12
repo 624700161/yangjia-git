@@ -1,0 +1,81 @@
+.productlist{
+    height: 100%;
+    width: 100%;
+    position: relative;
+    .cplist{
+        margin: 0.25rem;
+        overflow: scroll;
+        -webkit-overflow-scrolling: touch;
+        .cpcont{
+            .cpdiv{
+                display: inline-block;
+                text-align: center;
+                width: 5rem;
+                height:6.2rem;
+                background-color: #fff;
+                overflow: hidden;
+                border:1px solid #f2f2f2;
+                margin-bottom: 0.25rem;
+                img{
+                    width: 5rem;
+                    height: auto;
+                }
+                .p_title{
+                    margin-top: 0.7rem;
+                    font-size: 0.4rem;
+                    font-weight: 700;
+                    font-family: "方正兰亭粗黑_GBK";
+                }
+                .p_t{
+                    font-size: 0.25rem;
+                    color: #646464;
+                    margin-top: 0.2rem;
+                }
+                .p_ed{
+                    margin-top: 0.6rem;
+                }
+                .p_ed,
+                .p_qx,
+                .p_ll{
+                    line-height: 0.5rem;
+                    text-align: left;
+                    margin-left: 1.4rem;
+                    font-size: 0.3rem;
+                    color: #646464;
+                    span{
+                        color: #bf944a;
+                    }
+                }
+            }
+        }
+        .cpdiv.isright{
+            margin-left: 0.25rem;
+        }
+        .listnone{
+            text-align: center;
+            img{
+                width: 0.4rem;
+                height: auto;
+                vertical-align: middle;
+            }
+            span{
+                font-size: 0.25rem;
+                color: #646464;
+            }
+        }
+    }
+}
+.productlist /deep/ .mint-loadmore-content{
+    .mint-loadmore-top,
+    .mint-loadmore-bottom{
+        font-size: 0.25rem;
+        color: #646464;
+        span{
+            vertical-align: middle;
+        }
+        .mint-spinner-fading-circle{
+            width: 0.4rem;
+            height: 0.4rem;
+        }
+    }
+}

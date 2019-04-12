@@ -1,7 +1,7 @@
 <template>
   <div class="footer-outerbox">
-      <ul class="p_b20 p_t20">
-          <li v-for="item in listArr" :key="item" class="color_FF my_text_center list-item">{{item}}</li>
+      <ul class="">
+          <li v-for="item in listArr" :key="item.key"  :tp="item.tp" class="my_text_center list-item">{{item.text}}</li>
       </ul>
   </div>
 </template>
@@ -12,11 +12,36 @@ export default {
   data() {
     return {
       listArr: [
-        "客户服务热线：023-63883915",
-        "地址：重庆市渝中区民族路101号交易大厦6楼",
-        "Copyright@2009-2019",
-        "重庆股份转让中心有限责任公司版权所有",
-        "渝ICP备13004774号"
+        {
+          key:1,
+          tp:"t",
+          text:"客服电话"
+        },
+        {
+          key:2,
+          tp:"num",
+          text:"023-63861593"
+        },
+        {
+          key:3,
+          tp:"p",
+          text:"地址：重庆市渝中区民族路101号交易大厦6楼"
+        },
+        {
+          key:4,
+          tp:"p",
+          text:"邮箱：xinyr@chn-cstc.com"
+        },
+        {
+          key:5,
+          tp:"p",
+          text:"邮编：400010"
+        },
+        {
+          key:6,
+          tp:"bp",
+          text:"Copyright@2009-2019"
+        }
       ]
     };
   },

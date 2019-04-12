@@ -1,99 +1,154 @@
 <template>
-  <div class="log-popbtn flex flex-align-center flex-pack-justify" :class="{isactive:true,'head-fixed':isShowMenu}">
-    <img
-      src="../assets/images/components/logo.png"
-      alt="logo"
-      class="logo"
-      v-if="!( $route.path.indexOf('infoReport')>-1)"
-      @click="toIndex"
-    >
-    <div v-else @click="goBackFuc">
-      <img src="../assets/images/components/arrow-left.png" alt class="arrow">
-      <span class="color_33 font_size18 go-back">返回智估历史</span>
+  <div v-show="isShowHeader">
+    <div class="header" ref="header" :class="{isactive:true,'head-fixed':isShowMenu}">
+      <mt-header class="myheader">
+        <img
+          class="logo_menu"
+          @click="jumpToUrl('/')"
+          slot="left"
+          src="../assets/images/index/logo_menu.png"
+        >
+        <div slot="right">
+          <img
+            class="icon_user"
+            @click="jumpToUrl('/userIndex')"
+            src="../assets/images/index/icon_user.png"
+          >
+          <img
+            v-if="!isShowMenu"
+            class="icon_menu"
+            @click="menucheck"
+            src="../assets/images/index/icon_menu.png"
+          >
+          <img
+            v-else
+            class="icon_close"
+            @click="menucheck"
+            src="../assets/images/index/icon_close.png"
+          >
+        </div>
+      </mt-header>
     </div>
-    <img :src="menuIcon" alt class="menu-icon" @click="showMenu">
-
     <!-- 导航菜单 -->
-    <div class="nav-shade" v-if="isShowMenu">
-      <div class="nav-inner-box bg_colorFF my_text_center color_2C font_size14">
-        <p class="menu-title border_b">目录</p>
-        <ul>
-          <li
-            v-for="(item,index) in menuList"
-            :key="index"
-            class="menu-item"
-            :class="item.status && 'active'"
-            @click="jumpToUrl(item.url,index)"
-          >{{item.title}}</li>
-        </ul>
+    <div class="nav-shade" ref="nav_shade" v-show="isShowMenu">
+      <div class="menu-list">
+        <div v-for="(item,index) in menuList" :key="index" class="menu-item">
+          <img :src="item.imgurl" @click="jumpToUrl(item.url,item.isscroll)">
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import MenuPic from "../../static/components/menu.png";
-import MenuClosePic from "../../static/components/menu1.png";
+import menu1 from "../assets/images/index/menu_1.png";
+import menu2 from "../assets/images/index/menu_2.png";
+import menu3 from "../assets/images/index/menu_3.png";
+import menu4 from "../assets/images/index/menu_4.png";
+import menu5 from "../assets/images/index/menu_5.png";
 
 export default {
+  props: {
+    isOutUse: {
+      type: Boolean,
+      default: false
+    },
+    isShow: {
+      type: Boolean,
+      default: true
+    }
+  },
   data() {
     return {
-      menuIcon: MenuPic,
+      clientHeight: "",
       menuList: [
         {
-          title: "首页",
-          status: 0,
-          url: "/"
+          title: "关于我们",
+          imgurl: menu1,
+          url: "/aboutUs",
+          isscroll: false
         },
         {
-          title: "快速估值",
-          status: 0,
-          url: "/fast"
+          title: "常见问题",
+          imgurl: menu2,
+          url: "/questions",
+          isscroll: false
         },
         {
-          title: "专业估值",
-          status: 0,
-          url: "/profession"
+          title: "服务指南",
+          imgurl: menu3,
+          url: "/",
+          isscroll: false
         },
         {
-          title: "智估简介",
-          status: 0,
-          url: "/intro"
+          title: "申请流程",
+          imgurl: menu4,
+          url: "/steps",
+          isscroll: false
         },
         {
-          title: "智估历史",
-          status: 0,
-          url: "/history"
+          title: "联系我们",
+          imgurl: menu5,
+          url: "/",
+          isscroll: true
         }
       ],
-      isShowMenu: false
+      isShowMenu: false,
+      isShowHeader: this.isShow
     };
   },
+  mounted() {
+    this.$nextTick(function() {
+      // 获取浏览器可视区域高度
+      this.clientHeight =
+        document.documentElement.clientHeight || document.body.clientHeight;
+
+      window.onresize = function() {
+        this.clientHeight =
+          document.documentElement.clientHeight || document.body.clientHeight;
+      };
+    });
+  },
   methods: {
-    goBackFuc() {
-      this.$router.push("/history");
+    changeFixed(clientHeight) {
+      //动态修改样式
+      this.$refs.nav_shade.style.height = this.clientHeight+"px";
     },
-    //显示导航
-    showMenu() {
+    show() {
+      this.isShowHeader = true;
+    },
+    hid() {
+      this.isShowHeader = false;
+    },
+    menucheck() {
       this.isShowMenu = !this.isShowMenu;
-      this.menuIcon = this.isShowMenu?MenuClosePic:MenuPic
+      if (!this.isShowMenu && this.isOutUse) {
+        this.isShowHeader = !this.isShowHeader;
+      }
     },
     //点击跳转
-    jumpToUrl(url, i) {
-      this.menuList.forEach((item, index) => {
-        if (index == i) {
-          item.status = 1;
-        } else {
-          item.status = 0;
+    jumpToUrl(url, scroll) {
+      if (scroll) {
+        if (
+          typeof document.compatMode != "undefined" &&
+          document.compatMode != "BackCompat"
+        ) {
+          document.documentElement.scrollTop=document.documentElement.scrollHeight;
+        } else if (typeof document.body != "undefined") {
+          document.body.scrollTop=document.body.scrollHeight;
         }
-      });
-      this.$router.push(url);
-      this.isShowMenu = false;
-      this.menuIcon = MenuPic;
-    },
-    //点击logo跳转首页
-    toIndex(){
-      this.$router.push('/')
+        this.menucheck();
+      } else {
+        this.$router.push(url);
+        this.menucheck();
+      }
+    }
+  },
+  watch: {
+    //监听
+    // 如果 `clientHeight` 发生改变，这个函数就会运行
+    clientHeight: function() {
+      this.changeFixed(this.clientHeight);
     }
   }
 };

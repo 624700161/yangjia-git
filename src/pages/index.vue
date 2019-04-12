@@ -1,142 +1,176 @@
 <template>
-  <div class="bg-box" ref="bgBox">
+  <div class="index">
     <!-- header -->
-    <header class="header flex flex-align-center flex-pack-justify">
-      <img src="../assets/images/index/logo_home.png" alt="logo" class="logo">
-      <div class="login-btn color_FF font_size14">
-        <img src="../assets/images/index/icon_user_white.png" alt="login" class="login-icon">
-        <span @click="clickUserInfo" v-if="$store.state.user">
-          {{$store.state.user.phone}}
-          <span @click.stop="loginOutFuc">退出登录</span>
-        </span>
-        <span @click="loginFuc" v-else>快速登录</span>
+    <myHeader class="myheader" ref="myheder" :isOutUse="true" :isShow="false"></myHeader>
+    <mt-header class="mtheader">
+      <div class="indexlogo" slot="left">
+        <img src="../assets/images/index/logo_index.png">
       </div>
-    </header>
+      <div slot="right">
+        <img class="icon_user" @click="jumpToUser" src="../assets/images/index/icon_user.png">
+        <img class="icon_menu" @click="menucheck" src="../assets/images/index/icon_menu.png">
+      </div>
+    </mt-header>
     <!-- slogan -->
-    <section class="slogan-area flex flex-v flex-align-center">
-      <p class="font_size38 color_FF slogan-title">榆钱儿智估</p>
-      <span class="bg_colorFF slogan-line"></span>
-      <p class="font_size14 color_FF slogan-subtitle">股权增值从估值开始</p>
-    </section>
-    <!-- jump -->
-    <section class="jump-area">
-      <div class="my_text_center">
-        <span
-          class="jump-btn bg_colorF0 color_FF font_size18 m_b30"
-          @click="jumpToFastOrProfessFuc('/fast')"
-        >快速估值</span>
-        <span
-          class="jump-btn bg_colorF0 color_FF font_size18"
-          @click="jumpToFastOrProfessFuc('/profession')"
-        >专业估值</span>
-      </div>
-    </section>
-    <!-- 登录窗 -->
-    <login-msg
-      @closeLoginBox="closeLoginBox"
-      :isClickLogin="isClickLogin"
-      @hasUnCompleteForm="hasUnCompleteForm"
-      @scrollToBottom = 'scrollToBottom'
-    ></login-msg>
-    <!-- 未完成表单提示窗 -->
-    <un-complete-form-msg
-      :isShowCompleteFormMsg="isShowCompleteFormMsg"
-      :unCompleteFormData="unCompleteFormData"
-      @closeFormMsgFuc="closeFormMsgFuc"
-    ></un-complete-form-msg>
-    <!-- dropDown -->
-    <ul class="drop-down bg_colorFF" v-if="isShowDropDown">
-      <li
-        class="down-item my_text_center color_2B font_size14"
-        v-for="(item,index) in dropDownMenu"
-        :key="index"
-        @click="jumpToMenu(item.url)"
-      >{{item.name}}</li>
-    </ul>
+    <div class="indexslogan" ref="indexslogan">
+      <mt-swipe :auto="sloganChangeTime" @change="handleChange">
+        <mt-swipe-item v-for="(item,index) in sloganlist" :key="index">
+          <img class="sloganimg" :src="item.imgurl">
+          <p class="p_title">{{item.title}}</p>
+          <transition name="move">
+            <div class="movediv">
+              <p class="p1">{{item.p1}}</p>
+              <p class="p2">{{item.p2}}</p>
+            </div>
+          </transition>
+        </mt-swipe-item>
+      </mt-swipe>
+    </div>
+    <PublicAbout></PublicAbout>
+    <!-- 页脚 -->
+    <myFooter></myFooter>
+    <Login ref="login"></Login>
+    <Register ref="register"></Register>
+    <Agreement ref="agreement"></Agreement>
   </div>
 </template>
 
 <script>
-import LoginMsg from "@/components/loginMsg";
-import unCompleteFormMsg from "@/components/unCompleteFormMsg";
+import slogan1 from "../assets/images/index/slogan1.jpg";
+import slogan2 from "../assets/images/index/slogan2.jpg";
+import slogan3 from "../assets/images/index/slogan3.jpg";
+import slogan4 from "../assets/images/index/slogan4.jpg";
+
+import myFooter from "@/components/myFooter";
+import myHeader from "@/components/myHeader";
+import PublicAbout from "@/components/publicAbout";
+
+import Login from "@/components/login";
+import Register from "@/components/register";
+import Agreement from "@/components/agreement";
 
 export default {
   data() {
     return {
-      isClickLogin: false,
-      isShowCompleteFormMsg: false,
-      unCompleteFormData: null, //未完成的表单数据
-      dropDownMenu: [
+      clientHeight: "",
+      sloganChangeTime: 4000,
+      sloganlist: [
         {
-          name: "智估简介",
-          url: "/intro"
+          imgurl: slogan1,
+          title: "CSTC XINYIDAI",
+          p1: "股转信易贷",
+          p2: "XINYIRONG"
         },
         {
-          name: "智估历史",
-          url: "/history"
+          imgurl: slogan2,
+          title: "793 BILLION",
+          p1: "累计融资793亿元   挂牌企业876家",
+          p2: "XINYIRONG"
+        },
+        {
+          imgurl: slogan3,
+          title: "PRECISE DOCKING",
+          p1: "精准对接",
+          p2: "XINYIRONG"
+        },
+        {
+          imgurl: slogan4,
+          title: "PROFESSIONAL FINANCING",
+          p1: "专业融资",
+          p2: "XINYIRONG"
         }
-      ],
-      isShowDropDown: false,
+      ]
     };
   },
-  components: {
-    LoginMsg,
-    unCompleteFormMsg
-  },
+  components: { myFooter, myHeader, PublicAbout, Login, Register,Agreement },
   mounted() {
-    this.$refs.bgBox.style.height = document.documentElement.clientHeight + "px"; //设置背景图高度
+    this.$nextTick(function() {
+      // 获取浏览器可视区域高度
+      this.clientHeight =
+        document.documentElement.clientHeight || document.body.clientHeight;
+
+      window.onresize = function() {
+        this.clientHeight =
+          document.documentElement.clientHeight || document.body.clientHeight;
+      };
+      EventBus.$on("changeVue", (str) => {
+        if(str==="register"){
+          this.$refs.login.hid();
+          this.$refs.register.show();
+        }else if(str==="login"){
+          this.$refs.register.hid();
+          this.$refs.login.show();
+        }else if(str==="agreement"){
+          this.$refs.agreement.show();
+        }
+      });
+    });
   },
 
   methods: {
-    //关闭弹出窗
-    closeLoginBox() {
-      this.isClickLogin = false;
+    changeFixed(clientHeight) {
+      //动态修改样式
+      this.$refs.indexslogan.style.height = clientHeight + "px";
     },
-    //点击登录
-    loginFuc() {
-      this.isClickLogin = true;
+    handleChange() {},
+    menucheck() {
+      this.$refs.myheder.show();
+      this.$refs.myheder.menucheck();
     },
-    //点击退出
-    loginOutFuc() {
-      this.$store.commit("loginOut");
-      this.$vux.toast.show({
-        text: "已退出登录"
-      });
+
+    jumpToUser() {
+      // if (this.$store.state.user && this.$store.state.user.phone) {
+      //   this.$router.push("/userIndex");
+      // } else {
+      //   this.$vux.toast.show({
+      //     text: "请先登录"
+      //   });
+      //   this.$refs.login.show();
+      // }
+      //this.$router.push("/userIndex");
+      this.$refs.login.show();
     },
+    loginFuc() {},
+    //关于我们
+    showAboutUs() {
+      isShowAboutUS = true;
+    },
+
+    // //点击退出
+    // loginOutFuc() {
+    //   this.$store.commit("loginOut");
+    //   this.$vux.toast.show({
+    //     text: "已退出登录"
+    //   });
+    // },
+
     //点击用户信息
     clickUserInfo() {
-      this.isShowDropDown = ! this.isShowDropDown;
+      this.isShowDropDown = !this.isShowDropDown;
     },
-    //跳转下拉框
-    jumpToMenu(data) {
-      this.isShowDropDown = false;
-      this.$router.push(data);
-    },
+
     //点击快速估值或专业估值
     jumpToFastOrProfessFuc(type) {
       if (this.$store.state.user && this.$store.state.user.phone) {
         this.$router.push(type);
       } else {
         this.$vux.toast.show({
-          text: "请先登录",
+          text: "请先登录"
         });
         setTimeout(this.loginFuc, 2000);
       }
     },
-    //用户有未完成的表单
-    hasUnCompleteForm(data) {
-      this.isShowCompleteFormMsg = true;
-      this.unCompleteFormData = data;
-    },
-    //关闭未完成表单提示信息
-    closeFormMsgFuc(data) {
-      this.isShowCompleteFormMsg = data;
-      this.unCompleteFormData = null;
-    },
     //blur-scroll
-    scrollToBottom(){
+    scrollToBottom() {
       document.documentElement.scrollTop = 0;
       document.body.scrollTop = 0;
+    }
+  },
+  watch: {
+    //监听
+    // 如果 `clientHeight` 发生改变，这个函数就会运行
+    clientHeight: function() {
+      this.changeFixed(this.clientHeight);
     }
   }
 };

@@ -19,6 +19,7 @@ import ApplyThree from '@/pages/applyThree' //申请-签字
 
 
 import Steps from '@/pages/steps' //关于我们
+import Fwzl from '@/pages/fwzl' //服务指南
 
 import AboutUs from '@/pages/aboutUs' //关于我们
 import Questions from '@/pages/questions' //常见问题
@@ -102,6 +103,11 @@ export default new Router({
       path: '/steps',
       name: '申请流程',
       component: Steps
+    },
+    {
+      path: '/fwzl',
+      name: '服务指南',
+      component: Fwzl
     },
     {
       path: '/authentication',

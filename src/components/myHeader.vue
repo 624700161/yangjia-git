@@ -77,7 +77,7 @@ export default {
         {
           title: "服务指南",
           imgurl: menu3,
-          url: "/",
+          url: "/fwzl",
           isscroll: false
         },
         {
